@@ -28,12 +28,12 @@ Usage:
     
     Javascript:
         var video = document.getElementById('video')
-        var chroma_key = new ChromaKey(video, document.getElementById('buffer'), document.getElementById('output'), 120, 35);
+        var chroma_key = new ChromaKey(video, document.getElementById('buffer'), document.getElementById('output'), 120, 35, 0);
         video.controls = false; // hide the controls
         video.play(); // because the video element is hidden we need to start the video manually   
 */
 
-function ChromaKey(video, buffer, output, color, variance) {
+function ChromaKey(video, buffer, output, color, variance, blur_radius) {
     this.video = video;
     this.buffer_canvas = buffer;
     this.buffer = buffer.getContext('2d');
@@ -41,8 +41,9 @@ function ChromaKey(video, buffer, output, color, variance) {
     this.output = output.getContext('2d');
     this.color = color;
     this.variance = variance;
+    this.blur_radius = blur_radius;
     
-    me = this;
+    var me = this;
     
     video.chroma_key = this;
     video.addEventListener('play', function() {me.start()}, false);
@@ -79,7 +80,8 @@ ChromaKey.prototype.rgb2hue = function(red, green, blue) {
 }
 
 ChromaKey.prototype.start = function() {
-    me = this;
+    var me = this;
+    
     this.interval = setInterval(function() {me.process_frame()}, 30);
 }
 
@@ -89,12 +91,44 @@ ChromaKey.prototype.stop = function() {
 
 ChromaKey.prototype.process_frame = function() {
     this.buffer.drawImage(this.video, 0, 0);
-    frame = this.buffer.getImageData(0, 0, this.output_canvas.width, this.output_canvas.height);
-    for (index = 0; index < frame.data.length; index += 4) {
+    var frame = this.buffer.getImageData(0, 0, this.output_canvas.width, this.output_canvas.height);
+    var lenght = frame.data.length;
+    for (index = 0; index < lenght; index += 4) {
         hue = this.rgb2hue(frame.data[index], frame.data[index + 1], blue = frame.data[index + 2])[0];
         if ((this.color - this.variance) < hue && hue < (this.color + this.variance)) {
             frame.data[index + 3] = 0;
+        } else {
+            frame.data[index + 3] = 255;
         }
     }
+    if (this.blur_radius > 0) {
+        this.blur_alpha(frame, this.output_canvas.width, this.output_canvas.height, this.blur_radius);
+    }
     this.output.putImageData(frame, 0, 0);
+}
+
+ChromaKey.prototype.blur_alpha = function(frame, width, height, radius) {
+    // this is to slow for realtime rendering
+    var row_width, total, count, new_row, new_col;
+    for (row = 0; row < height; row++) {
+        row_width = row * width;
+        for (col = 0; col < width; col++) {
+            total = 0;
+            count = 0;
+            for (distance_row = -radius; distance_row <= radius; distance_row++) {
+                new_row = row_width + distance_row * width;
+                if (new_row > -1) {
+                    for (distance_col = -radius; distance_col <= radius; distance_col++) {
+                        new_col = col + distance_col
+                        if (new_col > -1) {
+                            total += frame.data[(new_row + new_col) * 4 + 3];
+                            count += 1;
+                        }
+                    }
+                }
+            }
+            frame.data[(row_width + col) * 4 + 3] = total / count;
+        }
+    }
+    return frame;
 }
