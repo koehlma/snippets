@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style type="text/css">
+			#wrapper {
+				text-align: center;
+				
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				
+				min-height: 100%;
+				min-width: 100%;
+				
+				background: #D3D3D3;
+			    background: -webkit-radial-gradient(#D3D3D3, #696969);
+			    background:    -moz-radial-gradient(#D3D3D3, #696969);
+			    background:      -o-radial-gradient(#D3D3D3, #696969);
+			    background:         radial-gradient(#D3D3D3, #696969);
+			}
+			.pse {
+				margin: auto;
+				width: 80%;
+			}
+			.group {
+				text-align: center;
+			}
+			.element {
+				text-align: center;
+				
+				font-size: 100%;
+				
+				min-width: 40px;
+				
+				border: 2px solid #8811FF;
+				
+				cursor:pointer;
+				
+				transition        : transform 0.2s;
+				-o-transition     : -o-transform 0.2s;
+				-ms-transition    : -ms-transform 0.2s;
+				-moz-transition   : -moz-transform 0.2s;
+				-webkit-transition: -webkit-transform 0.2s;
+				
+				z-index: 0;
+			}
+			.element:hover {
+				transform        : scale(2);
+				-o-transform     : scale(2);
+				-ms-transform    : scale(2);
+				-moz-transform   : scale(2);
+				-webkit-transform: scale(2);
+				
+				
+				z-index: 1;
+			}
+			.element-alkalimetals {
+				background: #FF6666;
+			}
+			.element-alkaliearthmetals {
+				background: #FFDEAD;
+			}
+			.element-transitionmetals {
+				background: #FFC0C0;
+			}
+			.element-metals {
+				background: #CCCCCC;
+			}
+			.element-nonmetals {
+				background: #A0FFA0;
+			}
+			.element-metalloids {
+				background: #CCCC99;
+			}
+			.element-unknown {
+				background: #E8E8E8;
+			}
+			.element-halogens {
+				background: #FFFF99;
+			}
+			.element-noblegases {
+				background: #C0FFFF;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<h1>Periodic Table</h1>
+			<table class="pse">
+				<tr>
+					<td></td>
+					<td class="group">1</td>
+					<td class="group">2</td>
+					<td class="group">3</td>
+					<td class="group">4</td>
+					<td class="group">5</td>
+					<td class="group">6</td>
+					<td class="group">7</td>
+					<td class="group">8</td>
+					<td class="group">9</td>
+					<td class="group">10</td>
+					<td class="group">11</td>
+					<td class="group">12</td>
+					<td class="group">13</td>
+					<td class="group">14</td>
+					<td class="group">15</td>
+					<td class="group">16</td>
+					<td class="group">17</td>
+					<td class="group">18</td>
+				</tr>
+				<tr>
+					<td class="period">1</td>
+					<td>
+						<div class="element element-nonmetals">
+							1<br>H
+						</div>
+					</td>
+					<td colspan="16"></td>
+					<td>
+						<div class="element element-noblegases">
+							2<br>He
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="period">2</td>
+					<td>
+						<div class="element element-alkalimetals">
+							3<br>Li
+						</div>
+					</td>
+					<td>
+						<div class="element element-alkaliearthmetals">
+							4<br>Be
+						</div>
+					</td>
+					<td colspan="10"></td>
+					<td>
+						<div class="element element-metalloids">
+							5<br>B
+						</div>
+					</td>
+					<td>
+						<div class="element element-nonmetals">
+							6<br>C
+						</div>
+					</td>
+					<td>
+						<div class="element element-nonmetals">
+							7<br>N
+						</div>
+					</td>
+					<td>
+						<div class="element element-nonmetals">
+							8<br>0
+						</div>
+					</td>
+					<td>
+						<div class="element element-halogens">
+							9<br>F
+						</div>
+					</td>
+					<td>
+						<div class="element element-noblegases">
+							10<br>Ne
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="period">3</td>
+					<td>
+						<div class="element element-alkalimetals">
+							11<br>Na
+						</div>
+					</td>
+					<td>
+						<div class="element element-alkaliearthmetals">
+							12<br>Mg
+						</div>
+					</td>
+					<td colspan="10"></td>
+					<td>
+						<div class="element element-metals">
+							13<br>Al
+						</div>
+					</td>
+					<td>
+						<div class="element element-metalloids">
+							14<br>Si
+						</div>
+					</td>
+					<td>
+						<div class="element element-nonmetals">
+							15<br>P
+						</div>
+					</td>
+					<td>
+						<div class="element element-nonmetals">
+							16<br>S
+						</div>
+					</td>
+					<td>
+						<div class="element element-halogens">
+							17<br>Cl
+						</div>
+					</td>
+					<td>
+						<div class="element element-noblegases">
+							18<br>Ar
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="period">4</td>
+					<td>
+	                    <div class="element element-alkalimetals">
+	                        19<br>K
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-alkaliearthmetals">
+	                        20<br>Ca
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        21<br>Sc
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        22<br>Ti
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        23<br>V
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        24<br>Cr
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        25<br>Mn
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        26<br>Fe
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        27<br>Co
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        28<br>Ni
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        29<br>Cu
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        30<br>Zn
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        31<br>Ga
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metalloids">
+	                        32<br>Ge
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metalloids">
+	                        33<br>As
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-nonmetals">
+	                        34<br>Se
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-halogens">
+	                        35<br>Br
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-noblegases">
+	                        36<br>Kr
+	                    </div>
+	                </td>				
+				</tr>
+				<tr>
+					<td class="period">5</td>
+					<td>
+	                    <div class="element element-alkalimetals">
+	                        37<br>Rb
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-alkaliearthmetals">
+	                        38<br>Sr
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        39<br>Y
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        40<br>Zr
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        41<br>Nb
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        42<br>Mo
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        43<br>Tc
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        44<br>Ru
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        45<br>Rh
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        46<br>Pd
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        47<br>Ag
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        48<br>Cd
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        49<br>In
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        50<br>Sn
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metalloids">
+	                        51<br>Sb
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metalloids">
+	                        52<br>Te
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-halogens">
+	                        53<br>I
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-noblegases">
+	                        54<br>Xe
+	                    </div>
+	                </td>
+				</tr>
+				<tr>
+					<td class="period">6</td>
+					<td>
+	                    <div class="element element-alkalimetals">
+	                        55<br>Cs
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-alkaliearthmetals">
+	                        56<br>Ba
+	                    </div>
+	                </td>
+	                <td style="text-align: left;">*</td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        72<br>Hf
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        73<br>Ta
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        74<br>W
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        75<br>Re
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        76<br>Os
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        77<br>Ir
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        78<br>Pt
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        79<br>Au
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        80<br>Hg
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        81<br>Tl
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        82<br>Pb
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metals">
+	                        83<br>Bi
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-metalloids">
+	                        84<br>Po
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-halogens">
+	                        85<br>At
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-noblegases">
+	                        86<br>Rn
+	                    </div>
+	                </td>
+				</tr>
+				<tr>
+					<td class="period">7</td>
+					<td>
+	                    <div class="element element-alkalimetals">
+	                        87<br>Fr
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-alkaliearthmetals">
+	                        88<br>Ra
+	                    </div>
+	                </td>
+	                <td style="text-align: left;">**</td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        104<br>Rf
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        105<br>Db
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        106<br>Sg
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        107<br>Bh
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        108<br>Hs
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        109<br>Mt
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        110<br>Ds
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        111<br>Rg
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-transitionmetals">
+	                        112<br>Cn
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        113<br>Uut
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        114<br>Uuq
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        115<br>Uup
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        116<br>Uuh
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        117<br>Uus
+	                    </div>
+	                </td>
+	                <td>
+	                    <div class="element element-unknown">
+	                        118<br>Uuo
+	                    </div>
+	                </td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
