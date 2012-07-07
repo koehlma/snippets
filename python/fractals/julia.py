@@ -20,7 +20,7 @@ import collections
 import struct
 
 WIDTH = 1500
-SCALE = 400
+SCALE = 1000
 # Julia 1
 #C = -0.8 + 0.2j
 # Julia 2
