@@ -43,4 +43,42 @@ It uses the Connect-Scan method.
 For serious portscanning I would recommend you [nmap](http://nmap.org/).
 Usage: `portscanner.py <ip address> <start port> <end port>`.
 
+Python
+======
+Fractals
+--------
+Just a rainy day and I wanted to try something new and interesting.
+Then I came across a [Mandelbrot script](https://github.com/koehlma/snippets/blob/master/python/fractals/mandelbrot.py)
+in obfuscated Python that looks like a Mandelbrot fractal.
+I became interested and tried to do something myself.
+The result is a [Python script](https://github.com/koehlma/snippets/blob/master/python/fractals/julia.py)
+that renders Julia fractals.
+Have a look at the [results](https://github.com/koehlma/snippets/tree/master/python/fractals).
+
+GPlayer
+-------
+This is just a small wrapper around GStreamer's Python bindings which makes them
+more intuitive and brings the ability to play out of Python's file objects.
+
+[Source](https://github.com/koehlma/snippets/blob/master/python/gplayer/gplayer.py), 
+[Example](https://github.com/koehlma/snippets/blob/master/python/gplayer/example.py), 
+[Documentation](http://koehlma.github.com/snippets/gplayer/)
+
+DNS
+---
+DNS protocol implementation in pure Python.
+Please check the [source](https://github.com/koehlma/snippets/blob/master/python/network/dns.py)
+for more information.
+
+TUN/TAP
+-------
+Small wrapper around `/dev/net/tun` to control TUN and TAP devices out of Python.
+Please check the [source](https://github.com/koehlma/snippets/blob/master/python/network/tuntap.py)
+for more information.
+
+
+
+
+
+
 
