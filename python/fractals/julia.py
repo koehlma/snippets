@@ -16,58 +16,75 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
 import collections
 import struct
 
-WIDTH = 1500
-SCALE = 1000
-# Julia 1
-#C = -0.8 + 0.2j
-# Julia 2
-C = -0 + 0.8j
-# Julia 3
-#C = -1 + 0j
-F = lambda z, c: z ** 2 + c
-ITERATIONS = 255
-FILENAME = 'output.bmp'
+F = lambda z, c: z ** 2 + c     # julia base function
+ITERATIONS = 255                # number of iterations
 
 RGB = collections.namedtuple('RGB', ['red', 'green', 'blue'])
 
 def gradient(from_rgb, to_rgb, length=10):
+    """
+    Generates a gradient from `from_rgb` to `to_rgb` with `length` steps and
+    yields color by color.
+    """
     diff_rgb = RGB(to_rgb.red - from_rgb.red, to_rgb.green - from_rgb.green, to_rgb.blue - from_rgb.blue)
     length = length - 1
     for i in range(length + 1):
         yield RGB(int(from_rgb.red + diff_rgb.red / length * i), int(from_rgb.green + diff_rgb.green / length * i), int(from_rgb.blue + diff_rgb.blue / length * i))
 
-def julia(z, c, f=lambda z, c: z ** 2 + c, r=2):
-    for i in range(ITERATIONS):
-        if abs(z) > r:
-            break
+def julia(z, c, f=F, r=2, iterations=ITERATIONS):
+    """
+    Generates the Julia fractal.
+    """ 
+    for i in range(iterations):
+        if abs(z) > r: break
         z = f(z, c)
     return i
 
-def bmp(filename, height, width, f):    
-    with open(filename, 'wb') as output:
-        output.write(b'BM' + struct.pack('<QIIHHHH', width * height * 3 + 26, 26, 12, width, height, 1, 24))
-        for color in f():
-            output.write(struct.pack('BBB', color.blue, color.green, color.red))
-
+# gradient for fancy colors 
 colors = (list(gradient(RGB(0, 0, 0), RGB(0, 0, 255), int(ITERATIONS * 0.1))) + 
           list(gradient(RGB(0, 0, 255), RGB(0, 255, 255), int(ITERATIONS * 0.2))) +
           list(gradient(RGB(0, 255, 255), RGB(0, 255, 0), int(ITERATIONS * 0.3))) +
           list(gradient(RGB(0, 255, 0), RGB(255, 255, 255), int(ITERATIONS * 0.4 + 1))))
 
-def generate(f=F):
-    values = []
-    for i in range(int(-(WIDTH + 9) / 2), int((WIDTH + 9) / 2)):
-        values.append(i / SCALE)    
-    total = WIDTH ** 2
-    for y in range(WIDTH):
-        for x in range(WIDTH):
-            current = WIDTH * y + x
-            print('\r{}/{} - {:.2f}%'.format(current, total, current / total * 100), end='')
-            yield colors[julia(complex(values[x], values[y]), C)]
-    print()
-    
 if __name__ == '__main__':
-    bmp(FILENAME, WIDTH, WIDTH, generate)
+    parser = argparse.ArgumentParser(description='Render some beautiful Julia fractals.')
+    parser.add_argument('output', help='output image')
+    parser.add_argument('-C', default=[-0.8, 0.2], type=float,
+                        help='julia\'s complex parameter (c = f1 + f2)', nargs=2, metavar='f')
+    parser.add_argument('--width', default=1500,
+                        help='image width', type=int)
+    parser.add_argument('--scale', default=400,
+                        help='scale the image', type=int)
+
+
+    arguments = parser.parse_args()
+    
+    c, width, scale = complex(*arguments.C), arguments.width, arguments.scale
+    
+    print('Generating Julia Fractal:')
+    print('    c         : {:f}'.format(c))
+    print('    f         : z ^ 2 + c')
+    print('    iterations: 255')
+    print('    scale     : {}'.format(scale))
+    print('    width     : {}'.format(width))
+    with open(arguments.output, 'wb') as output:
+        # bmp header
+        output.write(b'BM' + struct.pack('<QIIHHHH', width * width * 3 + 26, 26, 12, width, width, 1, 24))
+        # scaling
+        values = []
+        for i in range(int(-(width + 9) / 2), int((width + 9) / 2)):
+            values.append(i / scale)
+        # total steps    
+        total = arguments.width ** 2
+        # rendering
+        for y in range(width):
+            for x in range(width):
+                current = width * y + x
+                print('\r    progress  : {:.2f}% ({}/{})'.format(current / total * 100, current, total), end='')
+                color = colors[julia(complex(values[x], values[y]), c)]
+                output.write(struct.pack('BBB', color.blue, color.green, color.red))
+        print()
