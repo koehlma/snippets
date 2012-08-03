@@ -4,4 +4,4 @@ project.
 Just some experiments or stuff came into my mind and I want to try.
 Normally not active development and no documentation here, so read the source.
 
-Have a look at the [Overview of all Snippets](https://koehlma.github.com/snippets/).
+Have a look at the [Overview of all Snippets](http://koehlma.github.com/snippets/).
