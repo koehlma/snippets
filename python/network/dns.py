@@ -15,12 +15,46 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import math
 import random
 import socket
 import struct
 
-from digger.misc.buffer import WBuffer
-from digger.misc.partition import partition
+class WBuffer():
+    def __init__(self):
+        self.buffer = []
+        self.position = 0
+    
+    def __bytes__(self):
+        return b''.join(self.buffer)
+    
+    def put_byte(self, byte):
+        self.position += 1
+        self.buffer.append(bytes([byte]))
+    
+    def put_bytes(self, bytes):
+        self.position += len(bytes)
+        self.buffer.append(bytes)
+
+class RBuffer():
+    def __init__(self, buffer):
+        self.buffer = buffer
+        self.position = 0
+    
+    def get_byte(self):
+        self.position += 1
+        return self.buffer[self.position - 1]
+    
+    def get_bytes(self, length):
+        self.position += length
+        return self.buffer[self.position - length:self.position]
+
+def partition(message, blocksize):
+    position, parts = 0, []
+    for block in range(1, math.ceil(len(message) / blocksize) + 1):
+        parts.append(message[position:block * blocksize])
+        position = block * blocksize
+    return parts
 
 class DNSType():
     A = 1           # a host address
@@ -83,11 +117,10 @@ class DNS():
     POINTER = struct.Struct('! H')
     RECORD = struct.Struct('! H H L H')
     
-    def __init__(self, mode, number=None, headers={}, tcp=False):
+    def __init__(self, mode, number=None, headers={}):
         self.mode = mode
         self.number = random.randint(0, 65535) if number is None else number
         self.headers = headers
-        self.tcp = tcp
         self.questions = []
         self.answers = []
         self.authorities = []
@@ -226,8 +259,8 @@ class DNS():
                                                   (flags >> 7) & 1,
                                                   (flags >> 4) & 7,
                                                   (flags >> 0) & 15)
-        dns = cls(mode, number, {'opcode': opcode, 'aa': aa, 'tc': tc, 'rd': rd,
-                                 'ra': ra, 'z': z, 'rcode': rcode})
+        headers = {'opcode': opcode, 'aa': aa, 'tc': tc, 'rd': rd, 'ra': ra, 'z': z, 'rcode': rcode}
+        dns = DNS(mode, number, headers)
         for i in range(qcount):
             dns.questions.append(question())
         for i in range(acount):
@@ -257,3 +290,7 @@ class DNSQuery(DNS):
 class DNSResponse(DNS):
     def __init__(self, number=None, headers={}):
         super().__init__(self.MODE_RESPONSE, number, headers)
+
+def pack_tcp(query):
+    query = bytes(query)
+    return struct.pack('! H', len(query)) + query
